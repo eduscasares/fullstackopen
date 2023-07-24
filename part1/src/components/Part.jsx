@@ -7,5 +7,5 @@ const Part = ({name, number}) => {
         </div>
     );
 }
-
+ 
 export default Part;
