@@ -2,8 +2,6 @@ import React from 'react';
 import Part from './Part';
 
 const Content = ({names, numbers}) => {
-
-    console.log(names, numbers)
     return (
         <div>
             <Part name={names[0]} number={numbers[0]} />
