@@ -1,60 +1,55 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
-// import ButtonContainer from './components/ButtonContainer'
 import './index.css'
 import Statistics from './components/Statistics'
 import Button from './components/Button'
 
 const App = () => {
-  // save clicks of each button to its own state
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
-  const [all, setAll] = useState(0)
-  const [average, setAverage] = useState(0)
-  const [positive, setPositive] = useState(0)
-
-  useEffect(() => {
-
-    setAll(() => {
-      return good - bad
-    })
-
-    setAverage(all / 3)
-   
-    setPositive(good / (good + neutral + bad))
-
-  }, [bad, good, neutral, all, positive])
+  const [feedback, setFeedback] = useState({
+    good: 0,
+    neutral: 0,
+    bad: 0,
+    all: 0,
+    average: 0,
+    positive: 0
+  })
 
   const handleGood = () => {
-    setGood(good + 1)
-    
+    const aux = {
+      ...feedback,
+      good: feedback.good + 1,
+      all: feedback.all + 1
+    }
+    setFeedback(aux)
   }
 
   const handleNeutral = () => {
-    setNeutral(neutral + 1)
+    const aux = {
+      ...feedback,
+      neutral: feedback.neutral + 1,
+      all: feedback.all + 1
+    }
+    setFeedback(aux)
   }
 
   const handleBad = () => {
-    setBad(bad + 1)
-  }
+    const aux = {
+      ...feedback,
+      bad: feedback.bad + 1,
+      all: feedback.all + 1
+    }
+    setFeedback(aux)
+  } 
 
   return (
     <div>
       <h1>Give Feedback</h1>
       <div className="button-container">
-            <Button text='Good' handleClick={handleGood} />
-            <Button text='Neutral' handleClick={handleNeutral} />
-            <Button text='Bad' handleClick={handleBad} />
-        </div>
-      <Statistics />
-
-      <p>Good: {good}</p>
-      <p>Neutral: {neutral}</p>
-      <p>Bad: {bad}</p>
-      <strong><p>All: {all}</p></strong>
-      <p>Average: {average}</p>
-      <p>Positive: {isNaN(positive) ? 0 : positive}%</p>
+        <Button text='Good' handleClick={handleGood} />
+        <Button text='Neutral' handleClick={handleNeutral} />
+        <Button text='Bad' handleClick={handleBad} />
+      </div>
+      <Statistics feedback={feedback} />
     </div>
   )
 }
