@@ -17,3 +17,9 @@ code {
   display: flex;
   gap: 8px;
 }
+
+td {
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}

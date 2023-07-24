@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import Statistics from './components/Statistics'
@@ -42,14 +42,17 @@ const App = () => {
   } 
 
   return (
-    <div>
+
+        <div>
       <h1>Give Feedback</h1>
       <div className="button-container">
         <Button text='Good' handleClick={handleGood} />
         <Button text='Neutral' handleClick={handleNeutral} />
         <Button text='Bad' handleClick={handleBad} />
       </div>
-      <Statistics feedback={feedback} />
+      
+    <Statistics props={feedback} />
+
     </div>
   )
 }

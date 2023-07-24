@@ -1,19 +1,32 @@
 import React from 'react';
+import StatisticLine from './StatisticLine';
 
-const Statistics = ({ feedback }) => {
+const Statistics = (props) => {
 
-    const average = ((feedback.good * 1) + (feedback.bad * (-1))) / feedback.all
-    const percentage = feedback.good / feedback.all * 100
+    const average = ((props.props.good * 1) + (props.props.bad * (-1))) / props.props.all
+    const percentage = props.props.good / props.props.all * 100
 
     return (
         <div>
-            <h2>Results</h2>
-            <p>Good: {feedback.good}</p>
-            <p>Neutral: {feedback.neutral}</p>
-            <p>Bad: {feedback.bad}</p>
-            <strong><p>All: {feedback.all}</p></strong>
-            <p>Average: {isNaN(average) ? 0 : average}</p>
-            <p>Positive: {percentage}%</p>
+            <h2>Statistics</h2>
+
+            {
+
+                props.props.all === 0 ?
+                <p>No feedback given</p> :
+                <table>
+                    <StatisticLine name='Good' value={props.props.good}/>
+                    <StatisticLine name='Neutral' value={props.props.neutral}/>
+                    <StatisticLine name='Bad' value={props.props.bad} />
+                    <StatisticLine name='All' value={props.props.all} />
+                    <StatisticLine name='Average' value={isNaN(average) ? 0 : average} />
+                    <StatisticLine name='Percentage' value={isNaN(percentage) ? `0%` : `${percentage}%`} />
+                </table>
+            }
+
+
+
+           
         </div>
     );
 }
