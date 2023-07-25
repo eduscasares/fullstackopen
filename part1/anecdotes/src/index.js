@@ -1,12 +1,52 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 
 const App = (props) => {
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState([0, 0, 0, 0, 0, 0])
+  const [bestRated, setBestRated] = useState([0, 0, 0, 0, 0, 0])
+
+  useEffect(() => {
+    let maxVotesIndex = 0;
+    for (let i = 1; i < votes.length; i++) {
+      if (votes[i] > votes[maxVotesIndex]) {
+        maxVotesIndex = i;
+      }
+    }
+    setBestRated(maxVotesIndex);
+  }, [votes]);
+
+
+  const handleVote = () => {
+    let aux = [ ...votes ]
+    aux[selected] += 1
+    setVotes(aux)
+  }
+
+  const handleSelected = () => {
+    selected < 5 ?
+    setSelected(selected + 1) :
+    setSelected(0)
+  }
 
   return (
     <div>
+
+      <h2>Anecdote of the day</h2>
       {props.anecdotes[selected]}
+
+      <p>has {votes[selected]} votes</p>
+
+      <div>
+        <button onClick={handleVote}>vote</button>
+        <button onClick={() => handleSelected() }>next anecdote</button>
+      </div>
+
+      <h2>Anecdote with most votes</h2>
+
+      { props.anecdotes[bestRated] }
+
+      <p>has { votes[bestRated] } votes</p>
     </div>
   )
 }
