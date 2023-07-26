@@ -2,7 +2,10 @@ import React from 'react';
 
 const Total = ({ course }) => {
 
-    return <p>Number of exercises: {course[0].exercises + course[1].exercises + course[2].exercises}</p>;
+    const totalToArray = course.parts.map((element) => element.exercises)
+    const total = totalToArray.reduce((a, b) => a + b, 0)
+
+    return <strong><p>Number of exercises: { total }</p></strong>;
 
 }
 
