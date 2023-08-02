@@ -42,7 +42,7 @@ const App = () => {
           name: newName,
           number: newNumber
         })
-        .then(response => console.log(response))
+        // .then(response => console.log(response))
         .catch(error => console.log(error))
 
       setNewName('')
