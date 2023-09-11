@@ -32,9 +32,20 @@ const App = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     let aux = persons.map((element) => element.name);
+    // let auxNumber = persons.map((element) => element.number);
+    // let auxId = persons.map((element) => element.id);
+    console.log(aux)
+
 
     if (aux.includes(newName)) {
-      alert(`${newName} is already added to your phonebook`);
+      if (window.confirm(`${newName} is already added to your phonebook, replace the old number with a new one?`)) {
+        axios
+          .put(`http://localhost:3001/persons/${persons.find((person) => person.name === newName).id}`, {
+            name: newName,
+            number: newNumber
+          })
+          .catch(error => console.log(error))
+      }
     } else {
 
       axios
@@ -42,7 +53,6 @@ const App = () => {
           name: newName,
           number: newNumber
         })
-        // .then(response => console.log(response))
         .catch(error => console.log(error))
 
       setNewName('')
@@ -68,6 +78,14 @@ const App = () => {
     setFilteredPersons(filteredResult);
   };
 
+  const handleDelete = (id) => {
+    if(window.confirm(`Delete ${persons.find((person) => person.id === id).name}?`)) {
+      axios
+        .delete(`http://localhost:3001/persons/${id}`)
+        .catch(error => console.log(error))
+    }
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -91,6 +109,7 @@ const App = () => {
       
       <Persons 
         filteredPersons={filteredPersons} 
+        handleDelete={handleDelete}
       />
 
     </div>
